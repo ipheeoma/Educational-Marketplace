@@ -1,0 +1,11 @@
+{
+  "contractAddress": "0xc7d6630E40d75656aFd8B36de8f3968ffa764fbB",
+  "ownerAddress": "0x2673B1064cF217AB3F0970F0d60489D8707A0E37",
+  "network": "testnet",
+  "blockNumber": 23314642,
+  "timestamp": "2025-08-08T17:34:55.186Z",
+  "platformFeePercent": "250",
+  "defaultRoyaltyPercent": "1000",
+  "minContentPrice": "1000000000000000",
+  "maxContentPrice": "10000000000000000000"
+}

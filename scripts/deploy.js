@@ -40,15 +40,15 @@ async function main() {
       currentBlock: marketplaceStats[4].toString()
     });
 
-    // Check platform parameters
+    // Check platform parameters - Fixed BigInt conversion
     const platformFee = await marketplace.platformFeePercent();
     const defaultRoyalty = await marketplace.defaultRoyaltyPercent();
     const minPrice = await marketplace.minContentPrice();
     const maxPrice = await marketplace.maxContentPrice();
     
     console.log("⚙  Platform configuration:", {
-      platformFeePercent: (platformFee / 100).toString() + "%",
-      defaultRoyaltyPercent: (defaultRoyalty / 100).toString() + "%",
+      platformFeePercent: (Number(platformFee) / 100).toString() + "%",
+      defaultRoyaltyPercent: (Number(defaultRoyalty) / 100).toString() + "%",
       minContentPrice: ethers.formatEther(minPrice) + " ETH",
       maxContentPrice: ethers.formatEther(maxPrice) + " ETH"
     });
@@ -107,7 +107,7 @@ async function main() {
     console.log("🌐 Network:", (await ethers.provider.getNetwork()).name);
     console.log("🔗 Block Number:", (await ethers.provider.getBlockNumber()).toString());
     
-    // Save deployment info to file
+    // Save deployment info to file - Fixed BigInt conversion for JSON
     const deploymentInfo = {
       contractAddress: marketplace.target,
       ownerAddress: deployer.address,
@@ -135,6 +135,7 @@ async function main() {
 
   } catch (error) {
     console.error("❌ Deployment failed:", error);
+    console.error("Error stack:", error.stack);
     throw error;
   }
 }
@@ -143,9 +144,11 @@ async function main() {
 main()
   .then((result) => {
     console.log("\n✅ Deployment completed successfully!");
+    console.log("📍 Final contract address:", result.address);
     process.exit(0);
   })
   .catch((error) => {
-    console.error("\n❌ Deployment failed with error:", error);
+    console.error("\n❌ Deployment failed with error:", error.message);
+    console.error("Stack trace:", error.stack);
     process.exit(1);
-  });
+  });
